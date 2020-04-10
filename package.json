@@ -1,0 +1,23 @@
+{
+  "name": "opgave-mangler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "postinstall": "install-app-deps",
+    "start": "electron .",
+    "pack": "build --dir",
+    "dist": "build"
+  },
+  "repository": "",
+  "keywords": [],
+  "author": "Nikolaj Jehøj-Krogager",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "^8.2.1"
+  },
+  "dependencies": {
+    "jquery": "^3.4.1",
+    "python-shell": "^1.0.8"
+  }
+}
