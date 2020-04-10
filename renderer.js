@@ -9,31 +9,42 @@ var { PythonShell } = require('python-shell');
 var pythonFilePath = `${__dirname}/opgavemangler.py`;
 
 var options = {
-    mode: 'json',
-    encoding: "utf8"
+  mode: 'json',
+  encoding: "utf8"
 };
 
 function runPythonProcess() {
-    PythonShell.run(pythonFilePath, options, function (err, results) {
-        if (err) throw err;
-        console.log(results);
-        updateHTML(results);
-    });
+  // show spinner
+  var spinnerElement = document.getElementById("my-spinner");
+  spinnerElement.style.display = "";
+  // delete current stuff on screen
+  var containerElement = document.querySelector("#myCon");
+  containerElement.innerHTML = "";
+
+  PythonShell.run(pythonFilePath, options, function (err, results) {
+    if (err) throw err;
+    console.log(results);
+    updateHTML(results);
+  });
 }
 
 var tjekBtn = document.querySelector("#tjek-button");
 
 tjekBtn.addEventListener('click', () => {
-    console.log("Path: " + __dirname);
-    runPythonProcess();
+  console.log("Path: " + __dirname);
+  runPythonProcess();
 });
 
 function updateHTML(results) {
-    var containerElement = document.querySelector("#myCon");
-    containerElement.innerHTML = "";
+  // hide spinner
+  var spinnerElement = document.getElementById("my-spinner");
+  spinnerElement.style.display = "none";
 
-    results[0]['errors'].forEach(element => {
-        containerElement.innerHTML += `
+  var containerElement = document.querySelector("#myCon");
+  
+
+  results[0]['errors'].forEach(element => {
+    containerElement.innerHTML += `
         <div class="row my-2">
           <div class="col">
             <div class="alert alert-primary" role="alert">
@@ -51,10 +62,10 @@ function updateHTML(results) {
           </div>
         </div>
         `;
-    });
+  });
 
-    results[0]["results"].forEach(element => {
-        containerElement.innerHTML += `
+  results[0]["results"].forEach(element => {
+    containerElement.innerHTML += `
         <div class="row my-2">
           <div class="col">
             <div class="alert alert-primary" role="alert">
@@ -72,5 +83,5 @@ function updateHTML(results) {
           </div>
         </div>
         `;
-    });
+  });
 }
