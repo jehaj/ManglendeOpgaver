@@ -124,6 +124,6 @@ if __name__ == "__main__":
             break
     
     if done:
-        output["results"].append("Du mangler ingen opgaver!")
+        output["results"].append(["Super!", "Du mangler ingen opgaver!"])
     
     print(json.dumps(output))
