@@ -106,7 +106,7 @@ if __name__ == "__main__":
     mirsadOpgaver = returnOpgaver(pathToOpgaver)
     kapitler = list(mirsadOpgaver.keys())
     dineOpgaverPath = Path(__file__).parent.parent.parent.parent
-    dineOpgaver = getOwnFiles(str(__file__)[2].join(dineOpgaverPath), kapitler)
+    dineOpgaver = getOwnFiles(dineOpgaverPath, kapitler)
 
     comparison, x, m = compare(mirsadOpgaver, dineOpgaver)
 
