@@ -4,7 +4,7 @@ output = {"results": [], "errors": [], "debug": [], "name": ""}
 
 try:    
     import os
-    import sys
+    from pathlib import Path
     import json
     from openpyxl import load_workbook
 except Exception as e:
@@ -15,8 +15,9 @@ except Exception as e:
     quit()
 
 def checkFileInCorrectPlace():
-    filesplit = __file__.split(str(__file__)[2])
-    return filesplit[-6] == "AARHUS TECH"
+    # Check if folder 4/5 parents up equals AARHUS TECH
+    foldername = os.path.basename(Path(__file__).parent.parent.parent.parent.parent)
+    return foldername == "AARHUS TECH"
 
 def returnOpgaver(pathToOpgaveOversigt):
     wb = load_workbook(filename = pathToOpgaveOversigt)
@@ -50,7 +51,7 @@ def getOwnFiles(path, kapitler):
     temp = os.listdir(path)
     for item in range(len(temp)):
         if temp[item] != "Mirsad Kadribasic - ZZMatInfoMappe" and temp[item][:6] == "Mirsad":
-            path = "{}/{}".format(path, temp[item])
+            path = os.path.join(path, temp[item])
             break
     
     for x in range(len(kapitler)):
@@ -93,18 +94,19 @@ if __name__ == "__main__":
     output["debug"].append(f"Filen er placeret her: {__file__}")
 
     if checkFileInCorrectPlace():
-        output["name"] = f"{__file__.split(str(__file__)[2])[-2][20:]}"
+        output["name"] = f"{os.path.basename(Path(__file__).parent.parent.parent.parent)[20:]}"
     else:
         output["errors"].append("Python-filen er placeret det forkerte sted. Den skal placeres i Aarhus Tech under dit navn!")
         print(json.dumps(output, ensure_ascii=False))
         quit()
 
-    filesplit = __file__.split(str(__file__)[2])
-    pathToOpgaver = str(__file__)[2].join(filesplit[0:4]) + f"{str(__file__)[2]}Mirsad Kadribasic - ZZMatInfoMappe{str(__file__)[2]}Opgaver18R.xlsx"
-            
+    aarhusTechFolderPath = Path(__file__).parent.parent.parent.parent.parent
+    pathToOpgaver = os.path.join(aarhusTechFolderPath, 'Mirsad Kadribasic - ZZMatInfoMappe', 'Opgaver18R.xlsx')
+        
     mirsadOpgaver = returnOpgaver(pathToOpgaver)
     kapitler = list(mirsadOpgaver.keys())
-    dineOpgaver = getOwnFiles(str(__file__)[2].join(filesplit[0:4]), kapitler)
+    dineOpgaverPath = Path(__file__).parent.parent.parent.parent
+    dineOpgaver = getOwnFiles(str(__file__)[2].join(dineOpgaverPath), kapitler)
 
     comparison, x, m = compare(mirsadOpgaver, dineOpgaver)
 
