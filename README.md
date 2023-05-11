@@ -1,7 +1,7 @@
 # ManglendeOpgaver
 Jeg har lavet dette program for at gøre det mere overskueligt at tjekke hvilke opgaver man mangler.
 
-![](https://github.com/NikolajK-HTX/ManglendeOpgaver/blob/master/images/screenshot-1.png?raw=true)
+![](https://github.com/jehaj/ManglendeOpgaver/blob/master/images/screenshot-1.png?raw=true)
 
 ## Hvordan bruges det?
 Du kan enten klone denne repository og bygge det eller hente en udgivelse og bruge den. Måden det virker på, at man placerer mappen i følgende mappe
